@@ -22,16 +22,16 @@ module.exports.dataFilters = async (post, userId, type = 'multiple') => {
 module.exports.reduceUserDetails = (data) => {
   let userDetails = {};
 
-  if (data.name.trim() !== '') userDetails.name = data.name;
-  if (data.email.trim() !== '') userDetails.email = data.email;
-  if (data.username.trim() !== '') userDetails.username = data.username;
-  if (data.bio.trim() !== '') userDetails.bio = data.bio;
-  if (data.website.trim() !== '') {
-    if (data.website.trim().substring(0, 4) !== 'http') {
-      userDetails.website = `http://${data.website.trim()}`;
+  if (data.name !== '') userDetails.name = data.name;
+  if (data.email !== '') userDetails.email = data.email;
+  if (data.username !== '') userDetails.username = data.username;
+  if (data.bio !== '') userDetails.bio = data.bio;
+  if (data.website !== '') {
+    if (data.website.substring(0, 4) !== 'http') {
+      userDetails.website = `http://${data.website}`;
     } else userDetails.website = data.website;
   }
-  if (data.gender.trim() !== '') userDetails.gender = data.gender;
+  if (data.gender !== '') userDetails.gender = data.gender;
   if (data.phone !== '') userDetails.phone = data.phone;
 
   return userDetails;

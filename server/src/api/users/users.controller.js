@@ -112,8 +112,9 @@ module.exports = {
       return res.status(422).send({ message: 'invalid updates.' });
 
     try {
-      const userDetails = reduceUserDetails(req.body);
-      const response = await User.findByIdAndUpdate(req.user._id, userDetails);
+      const response = await User.findByIdAndUpdate(req.user._id, {
+        $set: { ...req.body },
+      });
       res.send(response);
     } catch (e) {
       next(e);

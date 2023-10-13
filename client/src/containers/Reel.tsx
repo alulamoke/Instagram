@@ -167,9 +167,8 @@ const Reel: React.FC<TReelProps> = ({}) => {
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder="Add a comment..."
                           autoFocus
-                          className="focus:outline-none"
+                          placeholder="Add a comment..."
                         />
                       </FormControl>
                     </FormItem>

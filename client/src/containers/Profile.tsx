@@ -9,6 +9,7 @@ import {
   Grid,
   Heart,
   ImageIcon,
+  LucideLink,
   MessageCircle,
   Tag,
   Video,
@@ -40,15 +41,17 @@ const Profile: React.FC<TProfileProps> = ({}) => {
 
   return (
     <section className="flex flex-col gap-12">
-      <div className="flex flex-wrap items-start justify-evenly gap-8">
-        <img
-          src={`${ImgUrl}${profile.user.imageurl}`}
-          alt="profile image"
-          className="h-40 w-40 rounded-full object-cover"
-        />
-        <div className="flex flex-col gap-4">
+      <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2">
+        <div className="flex justify-center">
+          <img
+            src={`${ImgUrl}${profile.user.imageurl}`}
+            alt="profile image"
+            className="h-44 w-44 rounded-full border object-cover"
+          />
+        </div>
+        <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between gap-8">
-            <p className="text-xl font-medium">{profile.user.username}</p>
+            <p className="text-xl font-semibold">{profile.user.username}</p>
             <Link
               to="/account/edit"
               className={cn(
@@ -59,13 +62,20 @@ const Profile: React.FC<TProfileProps> = ({}) => {
             </Link>
             {isAuthUserProfile ? <SettingModal /> : null}
           </div>
-          <div className="flex items-center justify-between gap-8">
+          <div className="flex items-center justify-between gap-4">
             <span>{profile.photos.length} posts</span>
             <span>{profile.user.followers.length} followers</span>
             <span>{profile.user.following.length} following</span>
           </div>
-          <p>{profile.user.name}</p>
-          <p>{profile.user.bio}</p>
+          <p className="font-medium">{profile.user.name}</p>
+          <p className="text-sm">{profile.user.bio}</p>
+          <a
+            href={`http://${profile.user.website}`}
+            target="_blank"
+            className="flex items-center gap-1 text-sm text-primary"
+          >
+            <LucideLink size={14} /> {profile.user.website}
+          </a>
         </div>
       </div>
       <hr />
@@ -168,11 +178,18 @@ const Profile: React.FC<TProfileProps> = ({}) => {
             )}
           </TabsContent>
           <TabsContent value="tagged">
-            <div className="flex flex-col items-center justify-center gap-2 text-center">
-              <Camera className="h-8 w-8" />
-              <h1 className="text-4xl font-black">Photos of you</h1>
-              <p>When people tag you in photos, they'll appear here.</p>
-            </div>
+            {isAuthUserProfile ? (
+              <div className="flex flex-col items-center justify-center gap-2 text-center">
+                <Camera className="h-8 w-8" />
+                <h1 className="text-4xl font-black">Photos of you</h1>
+                <p>When people tag you in photos, they'll appear here.</p>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-2 text-center">
+                <Camera className="h-8 w-8" />
+                <h1 className="text-4xl font-black">No Tagged photos</h1>
+              </div>
+            )}
           </TabsContent>
         </div>
       </Tabs>

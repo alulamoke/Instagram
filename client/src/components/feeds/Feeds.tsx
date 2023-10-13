@@ -50,7 +50,7 @@ export const Feeds: React.FC<TFeedsProps> = ({}) => {
                 className="w-full object-cover"
               />
             )}
-            <div className="flex flex-col gap-2 p-2">
+            <div className="flex flex-col gap-2 px-2 py-4">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-3">
                   <Heart className="h-6 w-6" />

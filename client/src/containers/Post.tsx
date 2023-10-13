@@ -165,8 +165,8 @@ const Post: React.FC<TPostProps> = ({}) => {
                     <FormControl>
                       <Input
                         {...field}
+                        autoFocus
                         placeholder="Add a comment..."
-                        className="focus:outline-none"
                       />
                     </FormControl>
                   </FormItem>
