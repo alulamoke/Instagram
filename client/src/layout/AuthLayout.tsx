@@ -10,12 +10,14 @@ export const AuthLayout = () => {
   const auth = useAuth();
 
   return auth?.user !== undefined ? (
-    <div className="grid grid-cols-5 gap-4">
-      <aside className="hidden sm:col-span-1 sm:block">
+    <div className="flex">
+      <aside className="hidden sm:fixed sm:block sm:w-24 lg:w-56 xl:w-64 2xl:w-80">
         <Sidebar />
       </aside>
-      <div className="col-span-5 md:col-span-4">
-        <Outlet />
+      <div className="w-full sm:ml-24 lg:ml-56 xl:ml-64 2xl:ml-80">
+        <div className="mx-auto max-w-screen-lg px-4 py-10">
+          <Outlet />
+        </div>
       </div>
     </div>
   ) : (

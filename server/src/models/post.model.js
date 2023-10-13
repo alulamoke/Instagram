@@ -7,6 +7,7 @@ const postSchema = mongoose.Schema(
       ref: 'users',
       required: true,
     },
+    type: { type: String, enum: ['post', 'reel'], default: 'post' },
     imageurl: { type: Array, unique: true, trim: true, required: true },
     caption: { type: String, trim: true, required: true },
     likes: [

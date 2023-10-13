@@ -24,7 +24,7 @@ export default {
     return response.data;
   },
 
-  getUserProfileInfo: async (username: string) => {
+  getUserProfileInfo: async (username?: string) => {
     const response = await apiV1().get(`/users/${username}`);
     return response.data;
   },

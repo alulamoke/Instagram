@@ -12,7 +12,10 @@ type TNoContentProps = {
   subtitle?: string;
 };
 
-export const NoContent: React.FC<TNoContentProps> = ({ title, subtitle }) => {
+export const NoContent: React.FC<TNoContentProps> = ({
+  title = "",
+  subtitle = "",
+}) => {
   return (
     <>
       <Helmet>

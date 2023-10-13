@@ -21,7 +21,7 @@ export default {
     return response.data;
   },
 
-  getOnePost: async (id: string) => {
+  getOnePost: async (id?: string) => {
     const response = await apiV1().get(`/posts/p/${id}`);
     return response.data;
   },
@@ -36,7 +36,7 @@ export default {
     return response.data;
   },
 
-  commentPost: async (id: string, data: any) => {
+  commentPost: async ({ id, data }: { id: string; data: { body: string } }) => {
     const response = await apiV1().patch(`/posts/c/${id}`, data);
     return response.data;
   },

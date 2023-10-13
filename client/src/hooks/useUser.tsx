@@ -14,6 +14,13 @@ export const useUser = () => {
   });
 };
 
+export const useProfile = (username?: string) => {
+  return useQuery({
+    queryKey: ["profile", username],
+    queryFn: () => userService.getUserProfileInfo(username),
+  });
+};
+
 export const useLogout = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();

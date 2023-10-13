@@ -1,137 +1,145 @@
+import { Link, NavLink } from "react-router-dom";
 import { useLogout } from "@/hooks/useUser";
+import { useAuth } from "@/providers/auth-provider";
+import { useTheme } from "@/providers/theme-provider";
 
-import { Logo } from "@/components/Logo";
-import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Compass,
   FileVideo2,
-  Heart,
   Home,
   Instagram,
   Menu,
-  MessageCircle,
   Moon,
-  MoreHorizontal,
-  PlusSquare,
-  Search,
   Settings,
   Sun,
 } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/themeToggle";
 
+import { ThemeToggle } from "@/components/themeToggle";
+import { Logo } from "@/components/Logo";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@/providers/theme-provider";
-import { CreatePostModal } from "@/components/modals/CreatePostModal";
+import { CreatePostModal } from "@/components/create/CreatePostModal";
+import { Search } from "@/components/search/Search";
+import { Messages } from "@/components/message/Messages";
+import { Notifications } from "@/components/Notification/Notifications";
+import { cn } from "@/lib/utils";
+import { ImgUrl } from "@/util/imageUrl";
 
 type TSidebarProps = {};
 
-const sidebaritems = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Search",
-    url: "/search",
-    icon: Search,
-  },
-  {
-    title: "Explore",
-    url: "/explore",
-    icon: Compass,
-  },
-  {
-    title: "Reels",
-    url: "/reel",
-    icon: FileVideo2,
-  },
-  {
-    title: "Messages",
-    url: "/messages",
-    icon: MessageCircle,
-  },
-  {
-    title: "Notifications",
-    url: "/notifications",
-    icon: Heart,
-  },
-];
-
 export const Sidebar: React.FC<TSidebarProps> = ({}) => {
+  const auth = useAuth();
   const { theme } = useTheme();
   const logout = useLogout();
 
   return (
-    <div className="flex h-screen flex-col justify-between gap-4 border-r px-4 py-10">
+    <div className="flex h-screen flex-col justify-between gap-4 border-r p-4 pt-10">
       <div className="flex flex-col gap-8">
         <div className="hidden lg:block">
           <Logo />
         </div>
-        <div className="flex items-center justify-center lg:hidden">
+        <Link to="/" className="flex items-center justify-center lg:hidden">
           <Instagram className="h-6 w-6" />
-        </div>
-        <ul className="flex flex-col gap-6">
-          {sidebaritems.map((item) => (
-            <>
-              <NavLink
-                key={item.url}
-                to={item.url}
-                className={({ isActive }) =>
-                  cn(
-                    "hidden hover:font-semibold hover:text-inherit lg:block",
-                    isActive ? "font-semibold" : "font-normal",
-                  )
-                }
-              >
-                <li className="flex items-center gap-4">
-                  <item.icon className="h-6 w-6 shrink-0" />
-                  <p className="text-lg">{item.title}</p>
-                </li>
-              </NavLink>
-              <NavLink
-                to={item.url}
-                className="flex items-center justify-center lg:hidden"
-              >
-                <li className={cn(buttonVariants({ variant: "ghost" }))}>
-                  <item.icon className="h-6 w-6" />
-                </li>
-              </NavLink>
-            </>
-          ))}
+        </Link>
+        <div className="flex flex-col gap-2">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              cn(
+                isActive ? "bg-accent" : "",
+                buttonVariants({
+                  variant: "ghost",
+                  className:
+                    "flex w-full items-center justify-center gap-4 rounded-lg py-6 lg:justify-start",
+                }),
+              )
+            }
+          >
+            <Home className="h-6 w-6 shrink-0" />
+            <p className="hidden text-lg lg:block">Home</p>
+          </NavLink>
+          <Search />
+          <NavLink
+            to="/explore"
+            className={({ isActive }) =>
+              cn(
+                isActive ? "bg-accent" : "",
+                buttonVariants({
+                  variant: "ghost",
+                  className:
+                    "flex w-full items-center justify-center gap-4 rounded-lg py-6 lg:justify-start",
+                }),
+              )
+            }
+          >
+            <Compass className="h-6 w-6 shrink-0" />
+            <p className="hidden text-lg lg:block">Explore</p>
+          </NavLink>
+          <NavLink
+            to="/reels"
+            className={({ isActive }) =>
+              cn(
+                isActive ? "bg-accent" : "",
+                buttonVariants({
+                  variant: "ghost",
+                  className:
+                    "flex w-full items-center justify-center gap-4 rounded-lg py-6 lg:justify-start",
+                }),
+              )
+            }
+          >
+            <FileVideo2 className="h-6 w-6 shrink-0" />
+            <p className="hidden text-lg lg:block">Reels</p>
+          </NavLink>
+          <Messages />
+          <Notifications />
           <CreatePostModal />
-        </ul>
+          <NavLink
+            to={`/${auth?.user.username}`}
+            className={({ isActive }) =>
+              cn(
+                isActive ? "bg-accent" : "",
+                buttonVariants({
+                  variant: "ghost",
+                  className:
+                    "flex w-full items-center justify-center gap-4 rounded-lg py-6 lg:justify-start",
+                }),
+              )
+            }
+          >
+            <img
+              src={`${ImgUrl}${auth?.user.imageurl}`}
+              alt="profile image"
+              className="h-6 w-6 shrink-0 rounded-full"
+            />
+            <p className="hidden text-lg lg:block">Profile</p>
+          </NavLink>
+        </div>
       </div>
       <div className="space-y-4">
-        {/* <ThemeToggle />
-        <Button onClick={() => logout.mutate()} className="w-full">
-          Logout
-        </Button> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="flex w-full items-center justify-start gap-4"
+              className="flex w-full items-center justify-center gap-4 lg:justify-start"
             >
               <Menu className="h-6 w-6" />
-              <p className="text-lg">More</p>
+              <p className="hidden text-lg lg:block">More</p>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             <DropdownMenuItem>
               <Link
-                to="/setting"
+                to="/account/edit"
                 className={cn(
                   buttonVariants({
                     variant: "ghost",
-                    className: "flex items-center gap-2",
+                    className: "flex w-full items-center justify-start gap-2",
                   }),
                 )}
               >
@@ -141,7 +149,10 @@ export const Sidebar: React.FC<TSidebarProps> = ({}) => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <ThemeToggle>
-                <Button variant="ghost" className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  className="flex w-full items-center justify-start gap-2"
+                >
                   {theme === "light" ? (
                     <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
                   ) : (
@@ -153,7 +164,11 @@ export const Sidebar: React.FC<TSidebarProps> = ({}) => {
             </DropdownMenuItem>
             <hr />
             <DropdownMenuItem>
-              <Button variant="ghost" onClick={() => logout.mutate()}>
+              <Button
+                variant="ghost"
+                onClick={() => logout.mutate()}
+                className="w-full justify-start"
+              >
                 Logout
               </Button>
             </DropdownMenuItem>

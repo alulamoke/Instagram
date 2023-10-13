@@ -7,8 +7,8 @@ type TApiLoadingProps = {
 
 export const ApiLoading: React.FC<TApiLoadingProps> = ({ className }) => {
   return (
-    <div className="grid h-screen place-items-center">
-      <Loader2 className={cn("grid h-12 w-12 animate-spin", className)} />
+    <div className={cn("grid h-screen place-items-center", className)}>
+      <Loader2 className="h-10 w-10 animate-spin" />
     </div>
   );
 };

@@ -3,6 +3,9 @@ const Joi = require('joi');
 const postRule = {
   //schemas for creating post
   create_post: Joi.object().keys({
+    type: Joi.string()
+      .required()
+      .error(() => `type is required.`),
     caption: Joi.string()
       .required()
       .error(() => `caption is required.`),

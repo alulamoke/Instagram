@@ -32,19 +32,14 @@ router.post('/', auth, async (req, res, next) => {
               (el) => `${el.destination.replace('.', '')}${el.filename}`
             ),
           });
+          if (
+            req.files[0].mimetype.startsWith('video') &&
+            req.body.type === 'reel'
+          ) {
+            post.type = 'reel';
+          }
           await post.save();
-          const postWithInfo = await Post.findById(post._id)
-            .populate('user')
-            .populate('comments.user', '_id imageurl username')
-            .select('-updatedAt -__v');
-          const { userLikedPost, userReportedPost, userTotalPost } =
-            await dataFilters(postWithInfo, req.user._id);
-          res.status(201).send({
-            ...postWithInfo._doc,
-            userLikedPost,
-            userReportedPost,
-            userTotalPost,
-          });
+          res.status(201).send(post);
         }
       }
     );
@@ -122,7 +117,7 @@ router.get('/explore', auth, async (_req, res, next) => {
   try {
     const result = await Post.find()
       .sort([['createdAt', -1]])
-      .select('_id imageurl likes comments');
+      .select('_id imageurl type likes comments');
     res.send(result);
   } catch (e) {
     next(e);
